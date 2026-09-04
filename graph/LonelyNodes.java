@@ -92,11 +92,14 @@ class LonelyNodes
 		Solution sol= new Solution();		
 		String str[]=sc.nextLine().split(" ");
 		root=new BinaryTreeNode(Integer.parseInt(str[0]));
-		for(int i=1; i<str.length; i++)
-			ln.insert(root,Integer.parseInt(str[i]));
+		for(int i=1; i<str.length; i++){
+			int value = Integer.parseInt(str[i]);
+            ln.insert(root, value);
+        }
 		ArrayList<Integer> result=sol.getPersonIDs(root);
 		Collections.sort(result);
 		System.out.println(result);
+        sc.close();
 	}
 }
 
@@ -104,11 +107,32 @@ class Solution
 {
     public ArrayList<Integer> getPersonIDs(BinaryTreeNode root) 
     {
-		//WRITE YOUR CODE HERE
+        //write your code here
+		ArrayList<Integer>nodes=new ArrayList<>();
+        // Root has no parent, so it cannot be lonely
+        getPersonIDs(root, false, nodes);
+        return nodes;
 	}
 	private void getPersonIDs(BinaryTreeNode root, boolean isLonely, ArrayList<Integer> nodes) 
 	{
-		//WRITE YOUR CODE HERE
+        //write your code here
+        //no node`  
+		if(root==null) return;
+        // This node has no sibling
+        if(isLonely) nodes.add(root.data);
+        
+        boolean leftExists=root.left!=null && root.left.data !=-1;
+        boolean rightExists=root.right!=null && root.right.data !=-1;
+        // Only left child
+        if(leftExists && !rightExists) getPersonIDs(root.left,true, nodes);
+        //only right right
+        if(!leftExists && rightExists) getPersonIDs(root.right,true, nodes);
+        // Two children OR no children
+        else
+        {
+            if(leftExists) getPersonIDs(root.left,false, nodes);
+            if(rightExists) getPersonIDs(root.right,false, nodes);
+        }
 	}
 }
 
