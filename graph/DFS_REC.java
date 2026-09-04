@@ -55,24 +55,36 @@ enter source for DFS traversal
 Following is Depth First Traversal:
 0 1 3 2 4 5
 */
-import java.io.*;
 import java.util.*;
-class Test 
+@SuppressWarnings("unchecked")
+class DFS_REC
 {
     private int V;                              //number of nodes
     private LinkedList<Integer> adj[];              //adjacency list
-    public Test(int v)
+    public DFS_REC(int v)
     {
         //WRITE YOUR CODE HERE
+        V=v;
+        adj=new LinkedList[v];
+        for(int i=0;i<V;i++) adj[i]=new LinkedList<Integer>();
     }
     void addEdge(int v, int w)
     {
         //Write your code here for adding an edge to the adjacency list 
         //(edges are bidirectional)
+        adj[v].add(w);
+        adj[w].add(v);
     }
     void DFSUtil(int vertex, boolean nodes[])
     {
-        //WRITE YOUR CODE HERE  
+        //WRITE YOUR CODE HERE
+        nodes[vertex]=true;
+        System.out.println(vertex+" ");
+        for(int neighbor:adj[vertex])
+        {
+            if(!nodes[neighbor]) DFSUtil(neighbor, nodes);
+        }
+        return;
     }
     void DFS(int v)
     {
@@ -86,17 +98,18 @@ class Test
        // System.out.println("enter number of vertices and edges");  
         int v=sc.nextInt();
         int e=sc.nextInt();        
-        Test  t  = new Test(v);
-      //  System.out.println("enter edges");
+        DFS_REC  t  = new DFS_REC(v);
+        System.out.println("enter edges");
         for(int i=0;i<e;i++)
         {
             int end1=sc.nextInt();
             int end2=sc.nextInt();
             t.addEdge(end1,end2);
         }
-       // System.out.println("enter source for DFS traversal");
+        System.out.println("enter source for DFS traversal");
         int source=sc.nextInt();
-       // System.out.println("Following is Depth First Traversal: ");
+        System.out.println("Following is Depth First Traversal: ");
         t.DFS(source);
+        sc.close();
     }      
 }
