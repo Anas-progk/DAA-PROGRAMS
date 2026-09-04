@@ -60,11 +60,48 @@ public class MaxArea_BFS
     public static int solve(int[][] grid) 
 	{
         //WRITE YOUR CODE HERE
+        int max=0;
+        for(int i=0;i<grid.length;i++)
+        {
+            for(int j=0;j<grid[0].length;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    int sum=bfs(grid,i,j);
+                    max=Math.max(max,sum);
+                }
+            }
+        }
+        return max;
     }
     
     private static int bfs(int[][] grid, int k, int l)
 	{
         //WRITE YOUR CODE HERE
+        Queue<int[]>q=new LinkedList<>();
+        int dr[]={-1,-1,-1,0,0,1,1,1};
+        int dc[]={-1,0,1,-1,1,-1,0,1};
+        q.add(new int[]{k,l});
+        grid[k][l]=0;
+        int count=1;
+        while(!q.isEmpty())
+        {
+            int[] temp=q.peek();q.remove();
+            int row=temp[0],col=temp[1];
+            for(int x=0;x<8;x++)
+            {
+                int nr=row+dr[x];
+                int nc=col+dc[x];
+                if(nr<0 || nr>=grid.length || nc<0 || nc>=grid[0].length) continue;
+                if(grid[nr][nc]==1)
+                {
+                    grid[nr][nc]=0;
+                    q.add(new int[]{nr,nc});
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     public static void main(String[] args) 
@@ -77,6 +114,7 @@ public class MaxArea_BFS
             for (int j = 0; j < n; j++) 
                 board[i][j] = in.nextInt();
 
-       System.out.println(new MaxArea_BFS().solve(board));
+       System.out.println(solve(board));
+       in.close();
     }
 }
