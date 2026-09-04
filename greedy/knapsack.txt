@@ -1,0 +1,443 @@
+/*MAXIMUM NUMBER OF ACTIVITIES
+You are given N activities. Each activity has a start time and an end time.
+
+A person can participate in only one activity at a time. An activity can be 
+selected only if its start time is greater than or equal to the end time of the 
+previously selected activity.
+
+Your task is to select the maximum possible number of non-overlapping activities.
+
+Input Format:
+-------------
+The first line contains an integer N, representing the number of activities.
+
+The next N lines contain two space-separated integers:
+start_time end_time
+
+Output Format:
+--------------
+Print the maximum number of activities that can be selected.
+
+Sample Input 1:
+---------------
+6
+1 2
+3 4
+0 6
+5 7
+8 9
+5 9
+
+Sample Output 1:
+----------------
+4
+
+Explanation:
+------------
+One possible selection is:
+
+(1,2) -> (3,4) -> (5,7) -> (8,9)
+
+Therefore, the maximum number of activities is 4.
+
+
+Sample Input 2:
+---------------
+5
+1 3
+2 5
+4 7
+6 8
+8 10
+
+Sample Output 2:
+----------------
+3
+
+
+Sample Input 3:
+---------------
+4
+1 2
+2 3
+3 4
+4 5
+
+Sample Output 3:
+----------------
+4
+
+*/
+
+import java.util.Scanner;
+
+public class MaxActivities 
+{
+
+    static class Activity 
+	{
+        int start, end;
+
+        Activity(int start, int end) 
+		{
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+    static void sortByEndTime(Activity[] a) 
+	{
+        //WRITE YOUR CODE HERE
+    }
+
+    static int selectActivities(Activity[] activities) 
+	{
+
+        //WRITE YOUR CODE HERE
+    }
+
+    public static void main(String[] args) 
+	{
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        Activity[] activities = new Activity[n];
+
+        for (int i = 0; i < n; i++) 
+		{
+            int start = sc.nextInt();
+            int end = sc.nextInt();
+
+            activities[i] = new Activity(start, end);
+        }
+
+        int answer = selectActivities(activities);
+
+        System.out.println(answer);
+
+        sc.close();
+    }
+}
+
+/*
+Greedy approach solves Fractional Knapsack problem reasonably in a good time
+In this problem we have a Knapsack that has a weight limit M.
+There are items i1, i2, ..., in each having weight w1, w2, ... wn and 
+some benefit (value or profit) associated with its p1, p2, ..., pn.
+
+Our objective is to maximize the benefit such that the total weight inside 
+the knapsack is at most N, and we are also allowed to take an item in fractional part.
+
+
+EXAMPLES
+input:
+60				//Kanpsack size
+4				//No.of Items
+40 10 20 24		//Weigths of Items
+280 100 120 120	//Profits of Items
+output: 440.0
+
+feasible solution is
+Itemno  Weights Profits pi/wi Ratio     Selected
+2       10.0    100.0   10.0            1.0
+1       40.0    280.0   7.0             1.0
+3       20.0    120.0   6.0             0.5
+4       24.0    120.0   5.0             0.0
+Optimal Solution: Maximum Profit is
+440.0
+
+
+input:
+16
+6
+
+6 10 3 5 1 3
+6 2  1 8 3 5
+output: 22.333334
+
+feasible solution is
+Itemno  Weights Profits pi/wi Ratio     Selected
+5       1.0     3.0     3.0             1.0
+6       3.0     5.0     1.6666666       1.0
+4       5.0     8.0     1.6             1.0
+1       6.0     6.0     1.0             1.0
+3       3.0     1.0     0.33333334      0.33333334
+2       10.0    2.0     0.2             0.0
+Total Profit is
+22.333334
+
+Sample Test Case:
+case =1
+input =4 15
+10 2
+10 4
+12 6
+18 9
+output =38.0
+*/
+
+
+
+import java.util.*;
+import java.lang.*;
+public class Greedy_Knapsack 
+{
+	public static float knapsack(int W, int wt[], int val[], int n) 
+	{
+		//WRITE YOUR CODE HERE
+	}
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int[] val = new int[N];
+		int[] wt = new int[N];
+		int W = sc.nextInt();
+		for (int i=0;i<N ;i++ )
+		{
+			val[i] = sc.nextInt();
+			wt[i] = sc.nextInt();
+		}
+      
+      System.out.print(knapsack(W, wt, val, N));
+	}
+}
+
+/*
+Given an amount of n rupees and an unlimited supply of coins or 
+notes of denominations {1, 2, 5, 10}. 
+we have to find the minimum number of coins required to make up the given amount.
+
+Examples:  
+---------
+Input: n= 39
+Output: 6
+Explanation: 39 can be formed using 3 coins of 10 rupees ,1 coin of 5 rupees 
+and 2 coins of 2 rupees so minimum coins required are 6.
+
+Input: n = 121
+Output: 13
+Explanation: 121 can be formed using 12 coins of 10 rupees and 1 coin  of 1 rupees.
+
+*/
+
+You are given a graph with V vertices and E edges. 
+Your task is to represent this graph using an adjacency list. 
+In this representation, each vertex has a list of adjacent vertices, 
+showing which vertices it is connected to.
+
+The graph is undirected, meaning if there is an edge between vertex u and vertex v, 
+then both u is connected to v and v is connected to u.
+
+Input Format:
+-------------
+Line-1: An integer V representing the number of vertices.
+Line-2: An integer E representing the number of edges.
+Next E Lines: The next E lines each contain two integers u and v 
+representing an edge between vertices u and v.
+
+Output Format:
+--------------
+Print the adjacency list of the graph, where each vertex's adjacent vertices are space-separated.
+
+Constraints:
+------------
+*2 <= V <= 1000 (The number of vertices)
+*0 <= u, v < V (Valid vertices indices)
+*0 <= E <= V*(V-1)/2 (Maximum number of edges for an undirected graph)
+
+Sample Input-1:
+---------------
+5
+4
+0 1
+0 2
+1 3
+3 4
+
+Sample Output-1:
+----------------
+0: 1 2
+1: 0 3
+2: 0
+3: 1 4
+4: 3
+
+Explanation:
+------------
+Vertex 0 is connected to vertices 1 and 2.
+Vertex 1 is connected to vertices 0 and 3.
+Vertex 2 is connected to vertex 0.
+Vertex 3 is connected to vertices 1 and 4.
+Vertex 4 is connected to vertex 3.
+
+Sample Input-2:
+---------------
+3
+2
+0 1
+2 1
+
+Sample Output-2:
+---------------
+0: 1
+1: 0 2
+2: 1
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Solution {
+    
+    // Method to add an edge between two vertices
+    public static void addEdge(List<List<Integer>> adj, int i, int j) 
+    {
+        //WRITE YOUR CODE HERE
+    }
+
+    // Method to display the adjacency list
+    public static void displayAdjList(List<List<Integer>> adj) 
+    {
+        //WRITE YOUR CODE HERE
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input number of vertices and edges
+        int V = sc.nextInt();
+        int E = sc.nextInt();
+
+        // Initialize adjacency list
+        List<List<Integer>> adj = new ArrayList<>(V); 
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        // Input edges and update the adjacency list
+        for (int i = 0; i < E; i++) 
+        {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            addEdge(adj, u, v);
+        }
+
+        // Display the adjacency list
+        displayAdjList(adj);
+    }
+}
+
+You are given V vertices representing a graph with V nodes. 
+The graph is undirected, and your task is to represent this graph using an adjacency matrix.
+
+Adjacency Matrix: An adjacency matrix is a 2D array of size V x V where:
+	matrix[i][j] = 1 indicates that there is an edge between vertex i and vertex j.
+	matrix[i][j] = 0 indicates that there is no direct edge between vertex i and vertex j.
+
+Add Edge: Implement a function to add edges between two vertices i and j. 
+Since the graph is undirected, an edge from i to j implies an edge from j to i.
+
+Display Matrix: Implement a function to display the adjacency matrix.
+
+Input Format:
+-------------
+Line-1: An integer V, the number of vertices.
+Line-2: An integer E, the number of edges.
+Next E lines: Two integers i and j for each line, representing an edge between vertices i and j.
+
+Output Format:
+---------------
+Print the adjacency matrix of the graph after adding all edges.
+
+Constraints:
+------------
+*1 <= V <= 20 (Maximum of 20 vertices)
+*0 <= i, j < V (Valid vertex indices)
+*0 <= E <= V*(V-1)/2 (Maximum number of edges for an undirected graph)
+
+Sample Input-1:
+---------------
+4
+4
+0 1
+0 2
+1 2
+2 3
+
+Sample Output-1:
+----------------
+0 1 1 0 
+1 0 1 0 
+1 1 0 1 
+0 0 1 0 
+
+Sample Input-2:
+---------------
+5
+5
+0 1
+0 4
+1 3
+1 2
+3 4
+
+Sample Output-2:
+----------------
+0 1 0 0 1 
+1 0 1 1 0 
+0 1 0 0 0 
+0 1 0 0 1 
+1 0 0 1 0 
+
+import java.util.Scanner;
+
+public class Solution{
+
+    // Function to add an edge to the adjacency matrix
+    public static void addEdge(int[][] mat, int i, int j) {
+        //WRITE YOUR CODE HERE
+       
+    }
+
+    // Function to display the adjacency matrix
+    public static void displayMatrix(int[][] mat) {
+        //WRITE YOUR CODE HERE
+    }
+
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+
+        // Input number of vertices
+        //System.out.println("Enter the number of vertices:");
+        int V = sc.nextInt();
+
+        // Create a matrix to represent the graph with V vertices
+        int[][] mat = new int[V][V];
+
+        // Input the number of edges
+        //System.out.println("Enter the number of edges:");
+        int E = sc.nextInt();
+
+        // Input edges and update the adjacency matrix
+        //System.out.println("Enter the edges (two space-separated integers for each edge):");
+        for (int i = 0; i < E; i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            addEdge(mat, u, v);
+        }
+
+        // Display the adjacency matrix
+        // System.out.println("Adjacency Matrix Representation:");
+        displayMatrix(mat);
+    }
+}
+
+
+
+
+
