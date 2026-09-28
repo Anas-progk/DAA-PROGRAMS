@@ -52,7 +52,60 @@ class MinProductSubset
 {
 	static int minProductSubset(int a[], int n)
 	{
-    	//Write your code here
+        // Count negatives, zeros and find the largest negative
+        // and smallest positive
+        int negCount = 0, zeroCount = 0;
+        int largestNegative = Integer.MIN_VALUE; // Closest to 0 (largest negative)
+        int smallestPositive = Integer.MAX_VALUE;
+        int product = 1;
+        
+        // Traverse through the array
+        for (int i = 0; i < n; i++) {
+            if (a[i] == 0) {
+                zeroCount++;
+            }
+            else if (a[i] < 0) {
+                negCount++;
+                largestNegative = Math.max(largestNegative, a[i]);
+                product *= a[i];
+            }
+            else {
+                smallestPositive = Math.min(smallestPositive, a[i]);
+                product *= a[i];
+            }
+        }
+        
+        // If all elements are 0
+        if (product == 1 && zeroCount > 0) {
+            return 0;
+        }
+        
+        // If there is even number of negatives and no zeros
+        if (negCount % 2 == 0 && zeroCount == 0) {
+            return product / largestNegative;
+        }
+        
+        // If there is even number of negatives and there are zeros
+        if (negCount % 2 == 0 && zeroCount > 0) {
+            return 0;
+        }
+        
+        // If there is odd number of negatives
+        if (negCount % 2 == 1) {
+            // If there are no positive numbers
+            if (smallestPositive == Integer.MAX_VALUE) {
+                return product;
+            }
+            // Compare product with smallest positive
+            return Math.min(product, smallestPositive);
+        }
+        
+        // If no negative numbers and at least one positive
+        if (negCount == 0) {
+            return smallestPositive;
+        }
+        
+        return product;
 	}
 
 	// main function

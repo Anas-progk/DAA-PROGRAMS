@@ -31,13 +31,17 @@ input = 11
 */
 
 import java.util.*;
-class Main
+class OddOccurances
 {
 	// Recursive function to find an odd occurring element in an array
 	// using binary search. This function assumes the input is valid.
 	public static int findOddOccuring(int[] nums, int low, int high)
 	{
-		//W Y C H
+		if(low>=high) return low;
+		int mid=(low+high)/2;
+		if(mid % 2 != 0) mid--;
+		if(nums[mid]==nums[mid+1]) return findOddOccuring(nums, mid+2, high);
+		else return findOddOccuring(nums, low, high);
 	}
 
 	public static void main(String[] args)
@@ -49,5 +53,6 @@ class Main
 			nums[i]=sc.nextInt();
 		int index = findOddOccuring(nums, 0, nums.length - 1);
 		System.out.println(nums[index]);
+		sc.close();
 	}
 }
