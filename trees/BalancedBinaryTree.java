@@ -40,60 +40,52 @@ false
 */
 import java.util.*;
 
-class TreeNode {
+class Node {
     int data;
-    TreeNode left, right;
+    Node left, right;
 
-    TreeNode(int data) {
+    Node(int data) {
         this.data = data;
     }
 }
 
 public class BalancedBinaryTree {
-    static TreeNode buildTree(int[] arr) {
+    static Node buildTree(int[] arr) {
         if (arr.length == 0 || arr[0] == -1) {
             return null;
         }
-        TreeNode root = new TreeNode(arr[0]);
-        Queue<TreeNode> queue = new LinkedList<>();
+        Node root = new Node(arr[0]);
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         int i = 1;
         while (!queue.isEmpty() && i < arr.length) {
-            TreeNode current = queue.poll();
+            Node current = queue.poll();
             if (i < arr.length && arr[i] != -1) {
-                current.left = new TreeNode(arr[i]);
+                current.left = new Node(arr[i]);
                 queue.add(current.left);
             }
             i++;
             if (i < arr.length && arr[i] != -1) {
-                current.right = new TreeNode(arr[i]);
+                current.right = new Node(arr[i]);
                 queue.add(current.right);
             }
             i++;
         }
         return root;
     }
-
-    static int height(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-        int leftHeight = height(node.left);
-        if (leftHeight == -1) {
-            return -1;
-        }
-        int rightHeight = height(node.right);
-        if (rightHeight == -1) {
-            return -1;
-        }
-        if (Math.abs(leftHeight - rightHeight) > 1) {
-            return -1;
-        }
-        return Math.max(leftHeight, rightHeight) + 1;
+    static int height(Node root)
+    {
+        if(root==null) return 0;
+        int leftHeight=height(root.left);
+        if(leftHeight==-1) return -1;
+        int rightHeight=height(root.right);
+        if(rightHeight==-1) return -1;
+        if(Math.abs(leftHeight-rightHeight)>1) return -1;
+        return 1+Math.max(leftHeight,rightHeight);
     }
-
-    static boolean isBalanced(TreeNode root) {
-        return height(root) != -1;
+    static boolean isBalanced(Node root)
+    {
+        return height(root) !=-1;
     }
 
     public static void main(String[] args) {
@@ -104,7 +96,7 @@ public class BalancedBinaryTree {
         for (int i = 0; i < parts.length; i++) {
             arr[i] = Integer.parseInt(parts[i]);
         }
-        TreeNode root = buildTree(arr);
+        Node root = buildTree(arr);
         System.out.println(isBalanced(root));
         sc.close();
     }

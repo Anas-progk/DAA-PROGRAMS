@@ -48,11 +48,11 @@ Sample Output-2:
 
 import java.util.*;
 
-class BinaryTreeNode
+class Node
 {
 	public int data; 
-	public BinaryTreeNode left, right; 
-	public BinaryTreeNode(int data)
+	public Node left, right; 
+	public Node(int data)
 	{
 		this.data = data; 
 		left = null; 
@@ -63,81 +63,91 @@ class BinaryTreeNode
 class Solution
 {
 	List<Integer> nodes = new ArrayList<>();
-	
+
 	// Main method to find the boundary of binary tree in anti-clockwise order
-	public List<Integer> boundaryOfBinaryTree(BinaryTreeNode root) 
+	public List<Integer> boundaryOfBinaryTree(Node root) 
 	{
+        nodes=new ArrayList<>();
         // If tree is empty or root is invalid, return empty list
-        
+        if(root==null) return new ArrayList<>();
         // Step 1: Add root node to boundary
-        
+        nodes.add(root.data);
         // Step 2: Add left boundary (excluding leaves)
-        
+        leftBoundary(root.left);
         /* Step 3: Add all leaf nodes
          Process left subtree leaves first, then right subtree */
-        
+        leaves(root.left);leaves(root.right);
         // Step 4: Add right boundary (excluding leaves, in reverse order)
-        
+        rightBoundary(root.right);
         return nodes;
     }
 
     /* Method to traverse and collect left boundary nodes
      Left boundary: nodes on the path from root to leftmost leaf */
-    public void leftBoundary(BinaryTreeNode root) 
+    public void leftBoundary(Node root) 
     {
         // Base case: if node is null, invalid, or is a leaf node
-        
+        if(root==null) return;
+        if(root.left == null && root.right == null) return;
         // Add current node to boundary (pre-order traversal)
-        
+        nodes.add(root.data);
         /* Priority: always go left if possible
          If left child exists, follow left path
          If no left child but right exists, follow right path */
-        
+        if(root.left!=null) leftBoundary(root.left);
+        else leftBoundary(root.right);
     }
 
     /* Method to traverse and collect right boundary nodes
      Right boundary: nodes on the path from root to rightmost leaf (in reverse)*/
-    public void rightBoundary(BinaryTreeNode root) 
+    public void rightBoundary(Node root) 
     {
         // Base case: if node is null, invalid, or is a leaf node
-        
+        if(root==null) return;
+        if(root.left == null && root.right == null) return;
         /* Priority: always go right if possible
          If right child exists, follow right path
          If no right child but left exists, follow left path*/
-        
+        if(root.right!=null) rightBoundary(root.right);
+        else rightBoundary(root.left);
         /* Add current node AFTER processing children (post-order)
          This ensures right boundary is added in reverse order (bottom-up) */
+         nodes.add(root.data);
     }
 
     /* Method to collect all leaf nodes using DFS
      Leaf nodes: nodes with no children */
-    public void leaves(BinaryTreeNode root) 
+    public void leaves(Node root) 
     {
         // Base case: if node is null or invalid
-        
+        if(root==null) return;
         // Check if current node is a leaf node
-            // Add leaf node to boundary
-        
+        // Add leaf node to boundary
+        if(root.left==null && root.right==null) {
+            nodes.add(root.data);
+            return;
+        }
         // Recursively process left and right subtrees (in-order traversal)
-        
+        leaves(root.left);
+        leaves(root.right);
     }
 }
 
 public class BoundaryOfBinaryTree
 {
-	static BinaryTreeNode root;
+	static Node root;
 	
 	// Utility method to insert nodes in level order (binary tree construction)
-	void insert(BinaryTreeNode temp, int key)
+	void insert(Node temp, int key)
     { 
         if (temp == null) 
         {
-            temp = new BinaryTreeNode(key);
+            temp = new Node(key);
             return;
         }
         
         // Use BFS (level order) to find first available position
-        Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+        Queue<Node> q = new LinkedList<Node>();
         q.add(temp);
  
         // Traverse level by level to find empty position
@@ -148,7 +158,7 @@ public class BoundaryOfBinaryTree
             // Insert in left child if available
             if (temp.left == null) 
             {
-                temp.left = new BinaryTreeNode(key);
+                temp.left = new Node(key);
                 break;
             }
             else
@@ -157,7 +167,7 @@ public class BoundaryOfBinaryTree
             // Insert in right child if available
             if (temp.right == null) 
             {
-                temp.right = new BinaryTreeNode(key);
+                temp.right = new Node(key);
                 break;
             }
             else
@@ -175,7 +185,7 @@ public class BoundaryOfBinaryTree
 		String str[] = sc.nextLine().split(" ");
 
 		// Create root node
-		root = new BinaryTreeNode(Integer.parseInt(str[0]));
+		root = new Node(Integer.parseInt(str[0]));
 
 		// Insert remaining nodes in level order
 		for(int i = 1; i < str.length; i++)
@@ -183,5 +193,6 @@ public class BoundaryOfBinaryTree
 
 		// Compute and print boundary traversal
 		System.out.println(sol.boundaryOfBinaryTree(root));
+        sc.close();
 	}
 }

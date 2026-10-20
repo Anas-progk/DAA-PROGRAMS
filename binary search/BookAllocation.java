@@ -35,18 +35,45 @@ import java.util.*;
 class BookAllocation {
     // Function to check if allocation is possible under given maxPages
     private static boolean isPossible(int[] pages, int n, int m, int maxPages) {
-        // W Y C H
+        int studentsRequired = 1;
+        int currentPages = 0;
+        for (int i = 0; i < n; i++) {
+            if (currentPages + pages[i] > maxPages) {
+                studentsRequired++;
+                currentPages = pages[i];
+                if (studentsRequired > m) {
+                    return false;
+                }
+            } else {
+                currentPages += pages[i];
+            }
+        }
+        return true;
     }
 
     // Binary Search function to minimize the maximum pages
     public static int allocateBooks(int[] pages, int n, int m) {
-        //W Y C H
+        int low = 0, high = 0;
+        for (int p : pages) {
+            high += p;
+        }
+        int result = high;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (isPossible(pages, n, m, mid)) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return result;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();  // number of books
-        int m = sc.nextInt();  // ber of students
+        int n = sc.nextInt(); // number of books
+        int m = sc.nextInt(); // number of students
         int[] pages = new int[n];
         for (int i = 0; i < n; i++) {
             pages[i] = sc.nextInt();

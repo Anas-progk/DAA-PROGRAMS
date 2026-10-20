@@ -29,14 +29,25 @@ output =10
 
 import java.util.*;
 
-class CountOnes{
+class CountOnes {
     // Function to find the first index of 1 using binary search
     public static int firstOneIndex(int[] nums, int n) {
-        // W Y C H
+        int low = 0, high = n - 1, result = n;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == 1) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return result;
     }
 
     public static int countOnes(int[] nums, int n) {
-       //W Y C H
+        int firstIdx = firstOneIndex(nums, n);
+        return n - firstIdx;
     }
 
     public static void main(String[] args) {

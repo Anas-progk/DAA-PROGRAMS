@@ -26,25 +26,29 @@ Output: 5
 0<=N<=50
 0<=count<=pow(10,11)
 */
-import java.util.*;
-class Stairs
-{	
-	static int ClimbStairs(int n)
-	{
-		if(n==0) return 1;
-		int sum=0;
-		for(int i=1;i<=2;i++)
-		{
-			if(n-i >=0) sum+=ClimbStairs(n-i);
-		}
-		return sum;
-	}
+import java.util.Scanner;
 
-	public static void main(String args[])
-	{
-		Scanner sc=new Scanner(System.in);
-		int n=sc.nextInt();
-		sc.close();
-		System.out.println(ClimbStairs(n));
-	}
+public class ClimbStairs {
+
+    static long countWays(int n) {
+        if (n <= 1) return 1;
+
+        long prev2 = 1;   // ways(0)
+        long prev1 = 1;   // ways(1)
+        long current = 0;
+
+        for (int i = 2; i <= n; i++) {
+            current = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return current;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        System.out.println(countWays(n));
+        sc.close();
+    }
 }

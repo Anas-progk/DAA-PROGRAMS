@@ -112,5 +112,6 @@ public class RightSideView {
         BinaryTreeNode root = buildTree(arr);
         Solution sol = new Solution();
         System.out.println(sol.rightSideView(root));
+        sc.close();
     }
 }
