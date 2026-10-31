@@ -58,7 +58,7 @@ Start at index-1:
 
 import java.util.*;
 
-class MinCostClimbingStairs {
+class MinCostClimbingStairsTabulation {
 
     public int minCostClimbingStairsDP(int n, int[] cost) {
 
@@ -85,7 +85,7 @@ class MinCostClimbingStairs {
             cost[i] = sc.nextInt();
         }
 
-        MinCostClimbingStairs obj = new MinCostClimbingStairs();
+        MinCostClimbingStairsTabulation obj = new MinCostClimbingStairsTabulation();
 
         System.out.println(obj.minCostClimbingStairsDP(n, cost));
 
