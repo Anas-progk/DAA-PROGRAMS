@@ -55,26 +55,40 @@ Start at index-1:
   -Spend 2 points and he wins.
 
 */
+
 import java.util.*;
-class MinCostClimbingStairs 
-{    
-	public int minCostClimbingStairsDP(int n,int[] cost) 
-	{
-		int[] dp=new int [n+1];
-		dp[0]=0;dp[1]=0;
-		for(int i=2;i<=n;i++)
-		{
-		    dp[i]=Math.min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
-		}
-		return dp[n];
-	}
-	public static void main(String[] args)
-    {
-		Scanner sc=new Scanner(System.in);
-		int n=sc.nextInt();     
-		int ar[]=new int[n];
-		for(int i=0;i<n;i++)
-			ar[i]=sc.nextInt();
-		System.out.println(new MinCostClimbingStairs().minCostClimbingStairsDP(n,ar) );
-	}
+
+class MinCostClimbingStairs {
+
+    public int minCostClimbingStairsDP(int n, int[] cost) {
+
+        int[] dp = new int[n + 1];
+
+        dp[n] = 0;
+        dp[n - 1] = cost[n - 1];
+
+        for (int i = n - 2; i >= 0; i--) {
+            dp[i] = cost[i]
+                    + Math.min(dp[i + 1], dp[i + 2]);
+        }
+
+        return Math.min(dp[0], dp[1]);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] cost = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            cost[i] = sc.nextInt();
+        }
+
+        MinCostClimbingStairs obj = new MinCostClimbingStairs();
+
+        System.out.println(obj.minCostClimbingStairsDP(n, cost));
+
+        sc.close();
+    }
 }

@@ -79,5 +79,6 @@ class MinCostClimbingStairs
 		for(int i=0;i<n;i++)
 			ar[i]=sc.nextInt();
 		System.out.println(new MinCostClimbingStairs().minimumCost(n,ar) );
+		sc.close();
 	}
 }
