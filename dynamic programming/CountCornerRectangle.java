@@ -65,28 +65,23 @@ class CountCornerRectangles
 {
     public int countRectangles(int[][] grid) 
     {
-        int m = grid.length;
-        int n = grid[0].length;
-        int total = 0;
-
-        // pick every pair of rows (r1, r2)
-        for (int r1 = 0; r1 < m; r1++) 
+        int m=grid.length;
+        int n=grid[0].length;
+        int total=0;
+        int count[][]=new int [n][n];
+        for(int r=0;r<m;r++)
         {
-            for (int r2 = r1 + 1; r2 < m; r2++) 
+            for(int c1=0;c1<n;c1++)
             {
-                int common = 0;
-
-                // count columns where both rows have 1
-                for (int c = 0; c < n; c++) 
+                if(grid[r][c1]==0) continue;
+                for(int c2=c1+1;c2<n;c2++)
                 {
-                    if (grid[r1][c] == 1 && grid[r2][c] == 1) 
+                    if(grid[r][c2]==1)
                     {
-                        common++;
+                        total+=count[c1][c2];
+                        count[c1][c2]++;
                     }
                 }
-
-                // choose any 2 of those columns
-                total += common * (common - 1) / 2;
             }
         }
         return total;
@@ -105,5 +100,6 @@ class CountCornerRectangles
 
         CountCornerRectangles obj = new CountCornerRectangles();
         System.out.println(obj.countRectangles(grid));
+        sc.close();
     }
 }

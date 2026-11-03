@@ -72,9 +72,37 @@ static Node buildTree(int[] arr) {
         }
         return root;
     }
-    static void levelOrder(Node root)
+    static boolean levelOrder(Node root)
     {
-        
+        if (root == null) {
+            return true;
+        }
+
+        ArrayList<Node> nodes = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            nodes.add(current);
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+            }
+        }
+
+        Map<Node, Integer> heights = new HashMap<>();
+        for (int i = nodes.size() - 1; i >= 0; i--) {
+            Node current = nodes.get(i);
+            int leftHeight = current.left == null ? 0 : heights.get(current.left);
+            int rightHeight = current.right == null ? 0 : heights.get(current.right);
+            if (Math.abs(leftHeight - rightHeight) > 1) {
+                return false;
+            }
+            heights.put(current, 1 + Math.max(leftHeight, rightHeight));
+        }
+        return true;
     }
 public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

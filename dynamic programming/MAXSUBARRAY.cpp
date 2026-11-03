@@ -24,7 +24,7 @@ Sample Input-1:
  
 Sample Output-1:
 ----------------
- 7
+7
    
 Explanation:
 ------------

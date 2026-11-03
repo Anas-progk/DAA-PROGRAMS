@@ -67,33 +67,59 @@ class Solution
 {
     public boolean isSymmetric(BinaryTreeNode root) 
 	{
-        //WRITE YOUR CODE HERE
+        return root == null || isSymmetricHelp(root.left, root.right);
     }
 
     private boolean isSymmetricHelp(BinaryTreeNode left, BinaryTreeNode right)
 	{
-        //WRITE YOUR CODE HERE
+        if (left == null || right == null) {
+            return left == right;
+        }
+        return left.data == right.data
+                && isSymmetricHelp(left.left, right.right)
+                && isSymmetricHelp(left.right, right.left);
     }
 }
 
 public class SymmetricTree
 {
-	static BinaryTreeNode root;
-	static BinaryTreeNode temp = root;
-	void insert(BinaryTreeNode temp, int key)
-    { 
-        //WRITE YOUR CODE HERE
+	static BinaryTreeNode buildTree(int[] arr)
+    {
+        if (arr.length == 0 || arr[0] == -1) {
+            return null;
+        }
+        BinaryTreeNode root = new BinaryTreeNode(arr[0]);
+        Queue<BinaryTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int i = 1;
+        while (!queue.isEmpty() && i < arr.length) {
+            BinaryTreeNode current = queue.poll();
+            if (arr[i] != -1) {
+                current.left = new BinaryTreeNode(arr[i]);
+                queue.add(current.left);
+            }
+            i++;
+            if (i < arr.length && arr[i] != -1) {
+                current.right = new BinaryTreeNode(arr[i]);
+                queue.add(current.right);
+            }
+            i++;
+        }
+        return root;
     }
 
 	public static void main(String args[])
 	{
 		Scanner sc=new Scanner(System.in);
-		String str[]=sc.nextLine().split(" ");
-		SymmetricTree st=new SymmetricTree();
-		root=new BinaryTreeNode(Integer.parseInt(str[0]));
-		for(int i=1; i<str.length; i++)
-			st.insert(root,Integer.parseInt(str[i]));
+		String line = sc.nextLine().trim();
+		String str[]=line.split("\\s+");
+		int[] arr = new int[str.length];
+		for (int i = 0; i < str.length; i++) {
+			arr[i] = Integer.parseInt(str[i]);
+		}
+		BinaryTreeNode root = buildTree(arr);
 		Solution sol= new Solution();
 		System.out.println(sol.isSymmetric(root));
+		sc.close();
 	}
 }

@@ -81,7 +81,20 @@ class GenerateAbbreviations {
     // k is the count of consecutive abbreviated characters
     private void backtrack(List<String> ans, StringBuilder builder, String word, int i, int k)
 	{
-        //WRITE YOUR CODE HERE    
+    if (i == word.length()) {
+
+    int len = builder.length();
+
+    if (k > 0) {
+        builder.append(k);
+    }
+
+    ans.add(builder.toString());
+
+    builder.setLength(len);  // Restore builder
+
+    return;
+}  
     }
 
 	public static void main(String args[])

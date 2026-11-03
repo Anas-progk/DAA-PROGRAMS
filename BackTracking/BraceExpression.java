@@ -53,6 +53,48 @@ Explanation:
 
 
 */
+
+import java.util.*;
+
 public class BraceExpression {
-    
+
+    static ArrayList<Integer> grayCode(int n) {
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        // Base condition
+        if (n == 0) {
+            ans.add(0);
+            return ans;
+        }
+
+        // Get previous Gray Code sequence
+        ArrayList<Integer> prev = grayCode(n - 1);
+
+        // First half: same previous sequence
+        for (int x : prev) {
+            ans.add(x);
+        }
+
+        // Second half: reverse and set the new bit
+        int bit = 1 << (n - 1);
+
+        for (int i = prev.size() - 1; i >= 0; i--) {
+            ans.add(prev.get(i) | bit);
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        System.out.println(grayCode(n));
+
+        sc.close();
+    }
 }
+

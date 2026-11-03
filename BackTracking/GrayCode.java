@@ -46,3 +46,19 @@ Sample Output-3:
 [xyzab, xyzac]
 
 */
+import java.util.*;
+public class GrayCode
+{
+    static String gcode(String line)
+    {
+        ArrayList<String>res=new ArrayList<>();
+        res.add("");
+        
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        String line=sc.nextLine();
+        sc.close();
+    }
+}

@@ -57,28 +57,92 @@ You can obtain like as follows: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 import java.util.*;
 
-class GetMaximumGold 
-{
-    public int getMaximumGold(int[][] grid) 
-	{
-        //WRITE YOUR CODE HERE
+
+import java.util.*;
+
+class GetMaximumGold {
+
+    public int getMaximumGold(int[][] grid) {
+
+        int maxGold = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+
+            for (int j = 0; j < grid[0].length; j++) {
+
+                if (grid[i][j] > 0) {
+
+                    maxGold = Math.max(maxGold,
+                        getMaximumGoldBacktrack(grid, i, j, 0));
+                }
+            }
+        }
+
+        return maxGold;
     }
-    
-	// i = row, j = column
-    private int getMaximumGoldBacktrack(int[][] grid, int i, int j, int curGold) 
-	{
-		//WRITE YOUR CODE HERE
-    }  
-	
-	public static void main(String args[])
-	{
-		Scanner sc=new Scanner(System.in);
-		int m=sc.nextInt();
-		int n=sc.nextInt();
-		int grid[][]=new int[m][n];
-		for(int i=0;i<m;i++)
-			for(int j=0;j<n;j++)
-				grid[i][j]=sc.nextInt();
-		System.out.println(new GetMaximumGold().getMaximumGold(grid));
-	}
+
+    // i = row, j = column
+    private int getMaximumGoldBacktrack(
+        int[][] grid, int i, int j, int curGold) {
+
+        // Check invalid position
+        if (i < 0 || j < 0 ||
+            i >= grid.length || j >= grid[0].length ||
+            grid[i][j] == 0) {
+
+            return curGold;
+        }
+
+        // Collect gold
+        int gold = grid[i][j];
+
+        grid[i][j] = 0;
+
+        curGold += gold;
+
+        int maxGold = curGold;
+
+        // Move down
+        maxGold = Math.max(maxGold,
+            getMaximumGoldBacktrack(grid, i + 1, j, curGold));
+
+        // Move up
+        maxGold = Math.max(maxGold,
+            getMaximumGoldBacktrack(grid, i - 1, j, curGold));
+
+        // Move right
+        maxGold = Math.max(maxGold,
+            getMaximumGoldBacktrack(grid, i, j + 1, curGold));
+
+        // Move left
+        maxGold = Math.max(maxGold,
+            getMaximumGoldBacktrack(grid, i, j - 1, curGold));
+
+        // Backtrack: Restore original gold
+        grid[i][j] = gold;
+
+        return maxGold;
+    }
+
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+
+        int grid[][] = new int[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = sc.nextInt();
+            }
+        }
+
+        System.out.println(
+            new GetMaximumGold().getMaximumGold(grid)
+        );
+
+        sc.close();
+    }
 }
